@@ -4,8 +4,8 @@ echo "Resultados para subir a DB";
 
 $tipodereporte = $_POST["nameradio"];
 $nombre = $_POST["namenombre"];
-$probabilidad = $_POST["nameprobabilidad"];
-$severidad = $_POST["nameseveridad"];
+/*$probabilidad = $_POST["nameprobabilidad"];*/
+/*$severidad = $_POST["nameseveridad"];*/
 $reporte = $_POST["namereporte"];
 $plan = $_POST["nameplan"];
 
