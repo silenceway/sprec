@@ -245,10 +245,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <!--Recorder JavaScript -->
+    <script src="js/recorder.js"></script>
 
-
-
-
+    <!--Site functions JavaScript -->
+    <script src="js/main.js"></script>
 
     <script>
         //revisa si online
@@ -429,12 +430,21 @@
             }
             if (navigator.onLine == true) {
                 loQueEstoyReconociendo = "nombre";
+/*
                 if (reconociendo == true) {
                     recognition.stop();
                 }
                 if (reconociendo == false) {
                     recognition.stop();
                     recognition.start();
+                }
+*/
+                if (reconociendo === true) {
+                    reconociendo = false;
+                    stopRecording(event.currentTarget);
+                } else {
+                    reconociendo = true;
+                    startRecording(event.currentTarget);
                 }
             }
         }
@@ -535,6 +545,8 @@
         }
     </script>
 
+    <pre id="log"></pre>
+    <ul id="recordingslist"></ul>
 </body>
 
 </html>
