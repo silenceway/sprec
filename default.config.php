@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'settings' => [
-        'googleSpeechApi' => 'XXXXxxxxxxxx',
-    ],
+    'keyFilePath' => '/path/to/file.json',
+    'languageCode' => 'en-US',
+    'timezone' => 'America/New_York',
 ];
