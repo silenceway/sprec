@@ -1,8 +1,17 @@
 <?php
+# Includes the autoloader for libraries installed with composer
+require __DIR__ . '/vendor/autoload.php';
+
+$settings = require __DIR__ . '/config.php';
+
+# Imports the Google Cloud client library
+use Google\Cloud\Speech\SpeechClient;
 
 if(!is_dir(dirname(__FILE__) . '/recordings')){
 	$res = mkdir("recordings",0777); 
 }
+
+date_default_timezone_set($settings['timezone']);
 
 // pull the raw binary data from the POST array
 $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
@@ -16,26 +25,31 @@ $fp = fopen(dirname(__FILE__) . '/recordings/'.$filename, 'wb');
 fwrite($fp, $decodedData);
 fclose($fp);
 
-$data = json_encode(array(
-    'config' => array(
-        'encoding' => 'LINEAR16',
-        'sample_rate' => 16000,
-        'language_code' => 'en-US'
-    ),
-    'audio' => array(
-        'content' => base64_encode(file_get_contents(dirname(__FILE__) . '/recordings/'.$filename))
-    )
-));
+# Your Google Cloud Platform project ID
+// $projectId = ;
 
-$ch = curl_init('https://speech.googleapis.com/v1beta1/speech:syncrecognize?key=XXX');
+# Instantiates a client
+$speech = new SpeechClient([
+    'keyFilePath' => $settings['keyFilePath'],
+    'languageCode' => $settings['languageCode'],
+]);
 
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data)));
+# The name of the audio file to transcribe
+$fileName = __DIR__ . '/recordings/' . $filename;
 
-$result = json_decode(curl_exec($ch));
+# The audio file's encoding and sample rate
+$options = [
+    'encoding' => 'LINEAR16',
+    'sampleRateHertz' => 44100,
+];
 
-$text = (isset($result->results[0]->alternatives[0]->transcript) ? $result->results[0]->alternatives[0]->transcript : '');
+# Detects speech in the audio file
+$results = $speech->recognize(fopen($fileName, 'r'), $options);
 
-echo $text;
+$output = array();
+foreach ($results[0]->alternatives() as $alternative) {
+    // echo 'Transcription: ' . $alternative['transcript'] . PHP_EOL;
+    $output['results'][] = $alternative['transcript'];
+}
+
+print json_encode($output);

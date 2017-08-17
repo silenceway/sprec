@@ -457,12 +457,21 @@
             }
             if (navigator.onLine == true) {
                 loQueEstoyReconociendo = "reporte";
+                /*
                 if (reconociendo == true) {
                     recognition.stop();
                 }
                 if (reconociendo == false) {
                     recognition.stop();
                     recognition.start();
+                }
+                */
+                if (reconociendo === true) {
+                    reconociendo = false;
+                    stopRecording(event.currentTarget);
+                } else {
+                    reconociendo = true;
+                    startRecording(event.currentTarget);
                 }
             }
 
@@ -475,12 +484,21 @@
             }
             if (navigator.onLine == true) {
                 loQueEstoyReconociendo = "plan";
+                /*
                 if (reconociendo == true) {
                     recognition.stop();
                 }
                 if (reconociendo == false) {
                     recognition.stop();
                     recognition.start();
+                }
+                */
+                if (reconociendo === true) {
+                    reconociendo = false;
+                    stopRecording(event.currentTarget);
+                } else {
+                    reconociendo = true;
+                    startRecording(event.currentTarget);
                 }
             }
         }

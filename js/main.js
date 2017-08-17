@@ -67,6 +67,7 @@ function uploadAudio(wavData) {
         fd.append('fname', wavName);
         fd.append('data', event.target.result);
         $.ajax({
+            dataType: "json",
             type: 'POST',
             url: 'speech.php',
             data: fd,
@@ -74,10 +75,26 @@ function uploadAudio(wavData) {
             contentType: false
         }).done(function (data) {
             //console.log(data);
-            log.innerHTML += "\n" + data;
+            if (data && data.results && data.results[0]) {
+                log.innerHTML += "\n" + data.results[0];
+                processField(data.results[0]);
+            }
         });
     };
     reader.readAsDataURL(wavData);
+}
+
+function processField(granResultadovariable) {
+    if (loQueEstoyReconociendo == "nombre") {
+        granResultadoNombre = granResultadovariable;
+        textolresultadonombre.innerHTML = granResultadoNombre;
+    } else if (loQueEstoyReconociendo == "reporte") {
+        granResultadoReporte = granResultadovariable;
+        textoresultadoReporte.innerHTML = granResultadoReporte;
+    } else if (loQueEstoyReconociendo == "plan") {
+        granResultadoPlan = granResultadovariable;
+        textoresultadoPlanDeaccion.innerHTML = granResultadoPlan;
+    }
 }
 
 window.onload = function init() {
