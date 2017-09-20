@@ -71,9 +71,27 @@
                                 <label class="radio-inline">
                                 <input id="acto" type="radio" name="nameradio" value="Acto" >Acto
                                 </label>
+
+                            </div>
+                        </div>
+
+                        <div class="service-item" id="tipodereporte">
+                            <div id="nombre" style="background-color: rgb(83,156,218); border-radius:1em; padding:10px; ">
+                                <h3>Lugar del reporte:</h3>
+
                                 <label class="radio-inline">
-                                <input id="observación" type="radio" name="nameradio" value="Observación" >Observación
+                                <input id="chaza" type="radio" name="namelugar" value="Chaza">Chaza
                                 </label>
+                                <label class="radio-inline">
+                                <input id="cumplidor" type="radio" name="namelugar" value="Cumplidor">Cumplidor
+                                </label>
+                                <label class="radio-inline">
+                                <input id="magdalena" type="radio" name="namelugar" value="Magdalena Medio">Magdalena Medio
+                                </label>
+                                <label class="radio-inline">
+                                <input id="bogota" type="radio" name="namelugar" value="Oficinas Bogotá">Oficinas Bogotá
+                                </label>
+
                             </div>
                         </div>
 
@@ -116,13 +134,148 @@
                                     <h4>Probabilidad:
                                         <h4>
 
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>A-Raro(1-10%)</th>
+                                                    <th>B-Improbable(11-30%)</th>
+                                                    <th>C-Posible(31-50%)</th>
+                                                    <th>D-Probable(51-70%)</th>
+                                                    <th>E-Casi certeza(71-90%)</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>2</td>
+                                                    <td>3</td>
+                                                    <td>4</td>
+                                                    <td>5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nunca ha ocurrido en la industria</td>
+                                                    <td>Ha ocurrido en la industria</td>
+                                                    <td>Ha ocurrido en la operación de GTEC</td>
+                                                    <td>Ocurre varias veces al año en la operación de GTEC</td>
+                                                    <td>Ocurre varias veces al año en la misma locación, facilidad o actividad
+                                                        de la compañía</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameprobabilidad" value="1"></td>
+                                                    <td><input type="radio" name="nameprobabilidad" value="2"></td>
+                                                    <td><input type="radio" name="nameprobabilidad" value="3"></td>
+                                                    <td><input type="radio" name="nameprobabilidad" value="4"></td>
+                                                    <td><input type="radio" name="nameprobabilidad" value="5"></td>
+                                                </tr>
+
+                                            </table>
+
 
                                 </div><br>
                                 <!--SEVERIDAD-->
                                 <div style="background-color: rgb(83,156,218); border-radius:1em; padding:10px; ">
                                     <h4>Severidad:
                                         <h4>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>Seleccionar</th>
+                                                    <th>Severidad</th>
+                                                    <th>Personas</th>
+                                                    <th>Medio Ambiente</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameseveridad" value="5"></td>
+                                                    <td>5 Catastrófico</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Muerte</li>
+                                                            <li>muertes múltiples</li>
+                                                            <li>más del 10% de reducción del personal</li>
+                                                            <li>inhabilidad para contratar</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Daño ambiental severo a largo plazo</li>
+                                                            <li>Efectos generalizados</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameseveridad" value="4"></td>
+                                                    <td>4 Mayor</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Lesiones con tiempo perdido</li>
+                                                            <li>Múltiples lesiones</li>
+                                                            <li>Impacto en la salud a largo plazo</li>
+                                                            <li>Incapacidad permanente</li>
+                                                            <li>Evacuación de la comunidad</li>
+                                                            <li>5 a 10% de reducción del personal</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Daño ambiental severo a corto plazo</li>
+                                                            <li>Efectos dentro del bloque</li>
+                                                            <li>Vertimiento en agua potable</li>
+                                                            <li>Vertimientos en cursos de agua</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameseveridad" value="3"></td>
+                                                    <td>3 Moderado</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Incidente con pérdida de tiempo</li>
+                                                            <li>Impacto en la salud a corto plazo</li>
+                                                            <li>Impacto en la salud a largo plazo</li>
+                                                            <li>Evacuación del sitio de trabajo</li>
+                                                            <li>1 a 5% de reducción del personal</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Daño ambiental moderado</li>
+                                                            <li>Impacto fuera del sitio >30m</li>
+                                                            <li>Contaminación localizada de agua (estancada)</li>
+                                                            <li>Mortalidad directa de fauna silvestre</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameseveridad" value="2"></td>
+                                                    <td>2 Menor</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Lesión que requiere atención médica</li>
+                                                            <li>Trabajo limitado</li>
+                                                            <li>Evacuación de área inmediata</li>
+                                                            <li>menos del 1% de reducción del personal</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Daño ambiental menor</li>
+                                                            <li>Contaminación localizada del suelo</li>
+                                                            <li>Impacto en el stio dentro de 30m fuera del sitio</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="radio" name="nameseveridad" value="1"></td>
+                                                    <td>1 Insignificante</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>Primeros auxilios</li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>N/A</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
 
+                                            </table>
                                 </div><br>
                             </div>
 
@@ -430,7 +583,7 @@
             }
             if (navigator.onLine == true) {
                 loQueEstoyReconociendo = "nombre";
-/*
+                /*
                 if (reconociendo == true) {
                     recognition.stop();
                 }
@@ -438,7 +591,7 @@
                     recognition.stop();
                     recognition.start();
                 }
-*/
+                */
                 if (reconociendo === true) {
                     reconociendo = false;
                     stopRecording(event.currentTarget);
@@ -563,8 +716,6 @@
         }
     </script>
 
-    <pre id="log"></pre>
-    <ul id="recordingslist"></ul>
 </body>
 
 </html>
