@@ -77,10 +77,13 @@ function uploadAudio(wavData) {
 
 function processField(granResultadovariable) {
     if (loQueEstoyReconociendo == "nombre") {
+        granResultadoNombre = granResultadovariable;
         textolresultadonombre.innerHTML = granResultadovariable;
     } else if (loQueEstoyReconociendo == "reporte") {
+        granResultadoReporte = granResultadovariable;
         textoresultadoReporte.innerHTML = granResultadovariable;
     } else if (loQueEstoyReconociendo == "plan") {
+        granResultadoPlan = granResultadovariable;
         textoresultadoPlanDeaccion.innerHTML = granResultadovariable;
     }
 }
