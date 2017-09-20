@@ -3,7 +3,9 @@ var audio_context,
     buttonText;
 
 function __log(e, data) {
-    log.innerHTML += "\n" + e + " " + (data || '');
+    // log.innerHTML += "\n" + e + " " + (data || '');
+    if (console && console.log)
+        console.log(e + " " + (data || ''));
 }
 
 function startUserMedia(stream) {
@@ -35,25 +37,15 @@ function stopRecording(button) {
     __log('Stopped recording.');
 
     // create WAV download link using audio data blob
-    createDownloadLink();
+    saveAudio();
 
     recorder.clear();
 }
-function createDownloadLink() {
-    recorder && recorder.exportWAV(function (blob) {
-        var url = URL.createObjectURL(blob);
-        var li = document.createElement('li');
-        var au = document.createElement('audio');
-        var hf = document.createElement('a');
 
-        au.controls = true;
-        au.src = url;
-        hf.href = url;
-        hf.download = new Date().toISOString() + '.wav';
-        hf.innerHTML = hf.download;
-        li.appendChild(au);
-        li.appendChild(hf);
-        recordingslist.appendChild(li);
+function saveAudio() {
+    recorder && recorder.exportWAV(function (blob) {
+        var loading = '<i class="fa fa-2x fa-spinner fa-spin"></i>';
+        processField(loading);
         uploadAudio(blob);
     });
 }
@@ -63,7 +55,7 @@ function uploadAudio(wavData) {
     reader.onload = function (event) {
         var fd = new FormData();
         var wavName = encodeURIComponent('audio_recording_' + new Date().getTime() + '.wav');
-        console.log("wavName = " + wavName);
+        __log("wavName = " + wavName);
         fd.append('fname', wavName);
         fd.append('data', event.target.result);
         $.ajax({
@@ -74,9 +66,8 @@ function uploadAudio(wavData) {
             processData: false,
             contentType: false
         }).done(function (data) {
-            //console.log(data);
             if (data && data.results && data.results[0]) {
-                log.innerHTML += "\n" + data.results[0];
+                __log(data.results[0]);
                 processField(data.results[0]);
             }
         });
@@ -86,14 +77,11 @@ function uploadAudio(wavData) {
 
 function processField(granResultadovariable) {
     if (loQueEstoyReconociendo == "nombre") {
-        granResultadoNombre = granResultadovariable;
-        textolresultadonombre.innerHTML = granResultadoNombre;
+        textolresultadonombre.innerHTML = granResultadovariable;
     } else if (loQueEstoyReconociendo == "reporte") {
-        granResultadoReporte = granResultadovariable;
-        textoresultadoReporte.innerHTML = granResultadoReporte;
+        textoresultadoReporte.innerHTML = granResultadovariable;
     } else if (loQueEstoyReconociendo == "plan") {
-        granResultadoPlan = granResultadovariable;
-        textoresultadoPlanDeaccion.innerHTML = granResultadoPlan;
+        textoresultadoPlanDeaccion.innerHTML = granResultadovariable;
     }
 }
 
