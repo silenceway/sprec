@@ -8,6 +8,42 @@ function __log(e, data) {
         console.log(e + " " + (data || ''));
 }
 
+function initRecorder() {
+    recorder = new Recorder({
+      monitorGain: 0,
+      numberOfChannels: 1,
+      wavBitDepth: 16,
+      encoderPath: "js/waveWorker.min.js"
+    });
+
+    recorder.addEventListener( "start", function(e){
+      __log('Recorder is started');
+    });
+    recorder.addEventListener( "stop", function(e){
+      __log('Recorder is stopped');
+    });
+    recorder.addEventListener( "pause", function(e){
+      __log('Recorder is paused');
+    });
+    recorder.addEventListener( "resume", function(e){
+      __log('Recorder is resuming');
+    });
+    recorder.addEventListener( "streamError", function(e){
+      __log('Error encountered: ' + e.error.name );
+    });
+    recorder.addEventListener( "streamReady", function(e){
+      __log('Audio stream is ready.');
+    });
+    recorder.addEventListener( "dataAvailable", function(e){
+      var dataBlob = new Blob( [e.detail], { type: 'audio/wav' } );
+      var loading = '<i class="fa fa-2x fa-spinner fa-spin"></i>';
+      processField(loading);
+      uploadAudio(dataBlob);
+    });
+    recorder.initStream();
+    return;
+}
+
 function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
     __log('Media stream created.');
@@ -20,7 +56,7 @@ function startUserMedia(stream) {
 }
 
 function startRecording(button) {
-    recorder && recorder.record();
+    recorder && recorder.start();
     buttonText = $(button).text();
     $(button).text('Terminar');
     // button.disabled = true;
@@ -35,19 +71,6 @@ function stopRecording(button) {
     // button.disabled = true;
     // button.previousElementSibling.disabled = false;
     __log('Stopped recording.');
-
-    // create WAV download link using audio data blob
-    saveAudio();
-
-    recorder.clear();
-}
-
-function saveAudio() {
-    recorder && recorder.exportWAV(function (blob) {
-        var loading = '<i class="fa fa-2x fa-spinner fa-spin"></i>';
-        processField(loading);
-        uploadAudio(blob);
-    });
 }
 
 function uploadAudio(wavData) {
@@ -70,6 +93,8 @@ function uploadAudio(wavData) {
                 __log(data.results[0]);
                 processField(data.results[0]);
             }
+        }).always(function () {
+            initRecorder();
         });
     };
     reader.readAsDataURL(wavData);
@@ -89,23 +114,5 @@ function processField(granResultadovariable) {
 }
 
 window.onload = function init() {
-    try {
-        // webkit shim
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        navigator.getUserMedia = (navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia);
-        window.URL = window.URL || window.webkitURL;
-
-        audio_context = new AudioContext;
-        __log('Audio context set up.');
-        __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-    } catch (e) {
-        alert('No web audio support in this browser!');
-    }
-
-    navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
-        __log('No live audio input: ' + e);
-    });
+    initRecorder();
 };

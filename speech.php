@@ -40,7 +40,7 @@ $fileName = __DIR__ . '/recordings/' . $filename;
 # The audio file's encoding and sample rate
 $options = [
     'encoding' => 'LINEAR16',
-    'sampleRateHertz' => 44100,
+/*    'sampleRateHertz' => 44100, */
 ];
 
 # Detects speech in the audio file
